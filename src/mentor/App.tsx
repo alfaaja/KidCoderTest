@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
 import DashboardOverview from './components/DashboardOverview';
@@ -10,29 +11,7 @@ import StudentsData from './components/StudentsData';
 import WhatsAppGroups from './components/WhatsAppGroups';
 
 function App() {
-  const [activeTab, setActiveTab] = useState('dashboard');
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
-  const renderContent = () => {
-    switch (activeTab) {
-      case 'dashboard':
-        return <DashboardOverview />;
-      case 'courses':
-        return <CoursesSelection />;
-      case 'schedule':
-        return <ClassSchedule />;
-      case 'materials':
-        return <MaterialsManagement />;
-      case 'feedback':
-        return <StudentFeedback />;
-      case 'students':
-        return <StudentsData />;
-      case 'whatsapp':
-        return <WhatsAppGroups />;
-      default:
-        return <DashboardOverview />;
-    }
-  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -46,14 +25,23 @@ function App() {
       
       {/* Sidebar */}
       <div className={`fixed inset-y-0 left-0 z-40 w-64 transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform lg:translate-x-0`}>
-        <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
+        <Sidebar />
       </div>
 
       {/* Main Content */}
       <div className="lg:ml-64">
         <Header />
         <main className="p-6">
-          {renderContent()}
+          <Routes>
+            <Route path="/" element={<Navigate to="/mentor/dashboard" />} />
+            <Route path="dashboard" element={<DashboardOverview />} />
+            <Route path="courses" element={<CoursesSelection />} />
+            <Route path="schedule" element={<ClassSchedule />} />
+            <Route path="materials" element={<MaterialsManagement />} />
+            <Route path="feedback" element={<StudentFeedback />} />
+            <Route path="students" element={<StudentsData />} />
+            <Route path="whatsapp" element={<WhatsAppGroups />} />
+          </Routes>
         </main>
       </div>
 

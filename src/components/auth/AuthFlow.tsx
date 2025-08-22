@@ -17,6 +17,8 @@ const AuthFlow: React.FC<AuthFlowProps> = ({ mode = 'default' }) => {
   if (user) {
     if (user.role === 'admin') {
       return <Navigate to="/admin" replace />;
+    } else if (user.role === 'mentor') {
+      return <Navigate to="/mentor" replace />;
     }
     return <UserDashboard />;
   }

@@ -15,12 +15,14 @@ import AdminDashboard from './admin/AdminDashboard';
 import { trackPageView } from './services/firebaseService';
 import Checkout from './components/kelas/Checkout';
 import AuthFlow from './components/auth/AuthFlow';
+import MentorApp from './mentor/App';
 
 function App() {
   return (
     <Routes>
       <Route path="/*" element={<MainLayout />} />
       <Route path="/admin/*" element={<AdminDashboard />} />
+      <Route path="/mentor/*" element={<MentorApp />} />
       <Route path="/checkout/:id" element={<Checkout />} />
       <Route path="/register" element={<AuthFlow mode="default" />} />
       <Route path="/admin-login" element={<AuthFlow mode="admin" />} />

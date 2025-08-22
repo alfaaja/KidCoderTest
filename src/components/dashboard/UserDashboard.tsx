@@ -1,5 +1,5 @@
 import React from 'react';
-import { LogOut, User, Mail, Calendar, Crown, GraduationCap, Presentation } from 'lucide-react';
+import { LogOut, User, Mail, Calendar, Crown, GraduationCap, Presentation, Phone, MapPin, BookOpen, Briefcase } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 
 const UserDashboard: React.FC = () => {
@@ -51,6 +51,157 @@ const UserDashboard: React.FC = () => {
 
   const config = roleConfig[user.role];
   const Icon = config.icon;
+
+  const ProfileCard = () => {
+    if (user.role === 'student' && user.studentData) {
+      return (
+        <div className="bg-white rounded-3xl shadow-2xl p-8 mb-8">
+          <h3 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+            <User className="w-6 h-6 mr-3 text-pink-500" />
+            Informasi Murid
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-4">
+              <div className="flex items-center space-x-3">
+                <GraduationCap className="w-5 h-5 text-pink-500" />
+                <div>
+                  <p className="text-sm text-gray-500">Nama Murid</p>
+                  <p className="font-semibold text-gray-800">{user.studentData.studentName}</p>
+                </div>
+              </div>
+              <div className="flex items-center space-x-3">
+                <Calendar className="w-5 h-5 text-pink-500" />
+                <div>
+                  <p className="text-sm text-gray-500">Tanggal Lahir</p>
+                  <p className="font-semibold text-gray-800">{new Date(user.studentData.birthDate).toLocaleDateString('id-ID')}</p>
+                </div>
+              </div>
+              <div className="flex items-center space-x-3">
+                <BookOpen className="w-5 h-5 text-pink-500" />
+                <div>
+                  <p className="text-sm text-gray-500">Kelas/Jenjang</p>
+                  <p className="font-semibold text-gray-800">{user.studentData.grade}</p>
+                </div>
+              </div>
+              {user.studentData.learningInterest && (
+                <div className="flex items-center space-x-3">
+                  <Briefcase className="w-5 h-5 text-pink-500" />
+                  <div>
+                    <p className="text-sm text-gray-500">Minat Belajar</p>
+                    <p className="font-semibold text-gray-800">{user.studentData.learningInterest}</p>
+                  </div>
+                </div>
+              )}
+            </div>
+            <div className="space-y-4">
+              <div className="flex items-center space-x-3">
+                <User className="w-5 h-5 text-pink-500" />
+                <div>
+                  <p className="text-sm text-gray-500">Nama Orang Tua/Wali</p>
+                  <p className="font-semibold text-gray-800">{user.studentData.parentName}</p>
+                </div>
+              </div>
+              <div className="flex items-center space-x-3">
+                <Mail className="w-5 h-5 text-pink-500" />
+                <div>
+                  <p className="text-sm text-gray-500">Email Orang Tua</p>
+                  <p className="font-semibold text-gray-800 break-all">{user.studentData.parentEmail}</p>
+                </div>
+              </div>
+              <div className="flex items-center space-x-3">
+                <Phone className="w-5 h-5 text-pink-500" />
+                <div>
+                  <p className="text-sm text-gray-500">HP Orang Tua</p>
+                  <p className="font-semibold text-gray-800">{user.studentData.parentPhone}</p>
+                </div>
+              </div>
+              {user.studentData.city && (
+                <div className="flex items-center space-x-3">
+                  <MapPin className="w-5 h-5 text-pink-500" />
+                  <div>
+                    <p className="text-sm text-gray-500">Kota</p>
+                    <p className="font-semibold text-gray-800">{user.studentData.city}</p>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    if (user.role === 'mentor' && user.mentorData) {
+      return (
+        <div className="bg-white rounded-3xl shadow-2xl p-8 mb-8">
+          <h3 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+            <User className="w-6 h-6 mr-3 text-blue-500" />
+            Informasi Mentor
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-4">
+              <div className="flex items-center space-x-3">
+                <Calendar className="w-5 h-5 text-blue-500" />
+                <div>
+                  <p className="text-sm text-gray-500">Tanggal Lahir</p>
+                  <p className="font-semibold text-gray-800">{new Date(user.mentorData.birthDate).toLocaleDateString('id-ID')}</p>
+                </div>
+              </div>
+              <div className="flex items-center space-x-3">
+                <Phone className="w-5 h-5 text-blue-500" />
+                <div>
+                  <p className="text-sm text-gray-500">Nomor HP</p>
+                  <p className="font-semibold text-gray-800">{user.mentorData.phone}</p>
+                </div>
+              </div>
+              <div className="flex items-center space-x-3">
+                <Briefcase className="w-5 h-5 text-blue-500" />
+                <div>
+                  <p className="text-sm text-gray-500">Bidang Keahlian</p>
+                  <p className="font-semibold text-gray-800">{user.mentorData.expertise}</p>
+                </div>
+              </div>
+              {user.mentorData.city && (
+                <div className="flex items-center space-x-3">
+                  <MapPin className="w-5 h-5 text-blue-500" />
+                  <div>
+                    <p className="text-sm text-gray-500">Kota</p>
+                    <p className="font-semibold text-gray-800">{user.mentorData.city}</p>
+                  </div>
+                </div>
+              )}
+            </div>
+            <div className="space-y-4">
+              <div className="flex items-start space-x-3">
+                <BookOpen className="w-5 h-5 text-blue-500 mt-1" />
+                <div>
+                  <p className="text-sm text-gray-500">Pengalaman Mengajar</p>
+                  <p className="font-semibold text-gray-800">{user.mentorData.teachingExperience}</p>
+                </div>
+              </div>
+              {user.mentorData.portfolio && (
+                <div className="flex items-center space-x-3">
+                  <Briefcase className="w-5 h-5 text-blue-500" />
+                  <div>
+                    <p className="text-sm text-gray-500">Portfolio</p>
+                    <a 
+                      href={user.mentorData.portfolio} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="font-semibold text-blue-600 hover:underline break-all"
+                    >
+                      {user.mentorData.portfolio}
+                    </a>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    return null;
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-600 via-purple-500 to-pink-500">
@@ -161,16 +312,31 @@ const UserDashboard: React.FC = () => {
           </div>
         </div>
 
+        {/* Profile Card */}
+        <ProfileCard />
+
         {/* Quick Actions */}
         <div className="bg-white rounded-3xl shadow-2xl p-8">
           <h3 className="text-xl font-bold text-gray-800 mb-6">Aksi Cepat</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <button className={`bg-gradient-to-r ${config.color} text-white p-6 rounded-2xl hover:opacity-90 transition-all transform hover:scale-105`}>
-              <div className="text-center">
-                <div className="text-3xl mb-2">🚀</div>
-                <p className="font-semibold">Mulai Belajar</p>
-              </div>
-            </button>
+            {user.role === 'mentor' ? (
+              <button 
+                onClick={() => window.location.href = '/mentor'}
+                className={`bg-gradient-to-r ${config.color} text-white p-6 rounded-2xl hover:opacity-90 transition-all transform hover:scale-105`}
+              >
+                <div className="text-center">
+                  <div className="text-3xl mb-2">👨‍🏫</div>
+                  <p className="font-semibold">Dashboard Mentor</p>
+                </div>
+              </button>
+            ) : (
+              <button className={`bg-gradient-to-r ${config.color} text-white p-6 rounded-2xl hover:opacity-90 transition-all transform hover:scale-105`}>
+                <div className="text-center">
+                  <div className="text-3xl mb-2">🚀</div>
+                  <p className="font-semibold">Mulai Belajar</p>
+                </div>
+              </button>
+            )}
             
             <button className="bg-gradient-to-r from-green-400 to-green-500 text-white p-6 rounded-2xl hover:opacity-90 transition-all transform hover:scale-105">
               <div className="text-center">

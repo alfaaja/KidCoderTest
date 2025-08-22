@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import { 
   Home, 
   BookOpen, 
@@ -11,12 +12,7 @@ import {
   Sparkles
 } from 'lucide-react';
 
-interface SidebarProps {
-  activeTab: string;
-  setActiveTab: (tab: string) => void;
-}
-
-const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
+const Sidebar: React.FC = () => {
   const menuItems = [
     { id: 'dashboard', label: 'Dashboard', icon: Home },
     { id: 'courses', label: 'Bidang Pembelajaran', icon: Code },
@@ -45,18 +41,20 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
         {menuItems.map((item) => {
           const IconComponent = item.icon;
           return (
-            <button
+            <NavLink
               key={item.id}
-              onClick={() => setActiveTab(item.id)}
-              className={`w-full flex items-center space-x-3 px-6 py-3 text-left transition-all duration-200 ${
-                activeTab === item.id
-                  ? 'bg-blue-50 text-blue-600 border-r-3 border-blue-600'
-                  : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
-              }`}
+              to={`/mentor/${item.id}`}
+              className={({ isActive }) => 
+                `w-full flex items-center space-x-3 px-6 py-3 text-left transition-all duration-200 ${
+                  isActive
+                    ? 'bg-blue-50 text-blue-600 border-r-3 border-blue-600'
+                    : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                }`
+              }
             >
               <IconComponent className="h-5 w-5" />
               <span className="font-medium">{item.label}</span>
-            </button>
+            </NavLink>
           );
         })}
       </nav>
